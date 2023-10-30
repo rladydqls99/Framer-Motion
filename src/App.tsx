@@ -1,13 +1,17 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
 
 const Wrapper = styled(motion.div)`
-  height: 100vh;
+  height: 200vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: ;
 `;
 
 const Box = styled(motion.div)`
@@ -33,9 +37,15 @@ function App() {
       "linear-gradient(135deg, rgba(159, 199, 48, 0.55), rgb(224, 224, 35))",
     ]
   );
+  const { scrollYProgress } = useViewportScroll();
+  const scrollScale = useTransform(scrollYProgress, [0, 1], [1, 5]);
   return (
     <Wrapper style={{ background: gradient }}>
-      <Box style={{ x: x, rotate: scale }} drag="x" dragSnapToOrigin></Box>
+      <Box
+        style={{ x: x, rotate: scale, scale: scrollScale }}
+        drag="x"
+        dragSnapToOrigin
+      ></Box>
     </Wrapper>
   );
 }

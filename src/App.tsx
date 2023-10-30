@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: ;
 `;
 
 const Box = styled(motion.div)`
@@ -21,10 +22,20 @@ const Box = styled(motion.div)`
 
 function App() {
   const x = useMotionValue(0);
-  const scale = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
+  const scale = useTransform(x, [-800, 800], [-360, 360]);
+  // x의 좌표에 따라 색깔이 변함
+  const gradient = useTransform(
+    x,
+    [-800, 0, 800],
+    [
+      "linear-gradient(135deg, rgba(24, 151, 147, 0.55), rgb(23, 101, 161))",
+      "linear-gradient(135deg, rgb(238, 0, 153), rgb(221,0,238))",
+      "linear-gradient(135deg, rgba(159, 199, 48, 0.55), rgb(224, 224, 35))",
+    ]
+  );
   return (
-    <Wrapper>
-      <Box style={{ x: x, scale: scale }} drag="x" dragSnapToOrigin></Box>
+    <Wrapper style={{ background: gradient }}>
+      <Box style={{ x: x, rotate: scale }} drag="x" dragSnapToOrigin></Box>
     </Wrapper>
   );
 }
